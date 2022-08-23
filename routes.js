@@ -107,10 +107,10 @@ app.get("/category/:name", async (request, response) => {
   
   const page = request.query.page;
   const sort = request.query.sort;
-  const skip = page * 4
+  const skip = page * 6
   console.log(page,request.query,skip,sort)   
   if(request.params.name === 'Notebook'){// выводим модель 
-    const notebook = await NotebookModel.find(request.query).sort(sort).limit(4).skip(skip);
+    const notebook = await NotebookModel.find(request.query).sort(sort).limit(6).skip(skip);
   
     const brend = []
     const processor = []
