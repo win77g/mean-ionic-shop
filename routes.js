@@ -681,7 +681,7 @@ app.put("/updateProductInBasketInClientBox/:id",async (request, response) => {
     const product = await clientBoxModel.findByIdAndUpdate({_id : id},{ 
 
       productInBasket: request.body
-    });
+    },{new: true});
     //response.send(product);
     response.json(product);
   } catch (e) {
