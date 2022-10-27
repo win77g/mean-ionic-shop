@@ -691,12 +691,27 @@ app.put("/updateProductInBasketInClientBox/:id",async (request, response) => {
 // update  delivery clientBox
 app.put("/updateDeliveryInClientBox/:id",async (request, response) => {
   const { id } = request.params;
-  
-  
+  try {
+    // const product = await clientBoxModel.findByIdAndUpdate(id,{ 
+    //   delivery:request.body,
+    console.log(request.body)
+     const product = await clientBoxModel.updateOne({_id:id},{ 
+      $push:{delivery:{$each:request.body}}  
+    },{new: true});
+    //response.send(product);
+    response.json(product);
+  }  
+  catch (e) {
+    response.status(500).send(e);
+  }
+});
+// update delivery after chack
+app.put("/updateDeliveryAfterChack/:id",async (request, response) => {
+  const { id } = request.params;
   try {
     const product = await clientBoxModel.findByIdAndUpdate(id,{ 
       delivery:request.body,
-      
+     
     },{new: true});
     //response.send(product);
     response.json(product);
@@ -722,18 +737,50 @@ app.put("/updatePayMathodInClientBox/:id",async (request, response) => {
     response.status(500).send(e);
   }
 });
+// update currency
+app.put("/updateCurrencyInClientBox/:id",async (request, response) => {
+  const { id } = request.params;
+  console.log(request.body)
+  try {
+    const currency = await clientBoxModel.findByIdAndUpdate(id,{ 
+      currency:request.body.currency,
+      
+    },{new: true});//respons update data
+    //response.send(product);
+    response.json(currency);
+  }  
+  catch (e) {
+    response.status(500).send(e);
+  }
 
+});
+// update language
+app.put("/updateLanguageInClientBox/:id",async (request, response) => {
+  const { id } = request.params;
+  console.log(request.body)
+  try {
+    const language = await clientBoxModel.findByIdAndUpdate(id,{ 
+      language:request.body.language,
+      
+    },{new: true});//respons update data
+    //response.send(product);
+    response.json(language);
+  }  
+  catch (e) {
+    response.status(500).send(e);
+  }
+
+});
 // update order clientBox
 app.put("/updateOrderInClientBox/:id",async (request, response) => {
   const { id } = request.params;
-  
+  console.log(request.body)
   
   try {
     const product = await clientBoxModel.updateOne({_id:id},{ 
       $push:{order:{$each:[request.body]}}
       
-    },{new: true});//respons update data
-    //response.send(product);
+    },{new: true});
     response.json(product);
   }  
   catch (e) {
@@ -774,6 +821,27 @@ app.put("/deleteOneOrderInClientBox/:id", async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+
+// update  profile Name in clientBox
+app.put("/updateProfileInClientBox/:id",async (request, response) => {
+  const { id } = request.params;
+  
+  
+  try {
+    const product = await clientBoxModel.findByIdAndUpdate(id,{ 
+      profile:request.body,
+      
+    },{new: true});//respons update data
+    //response.send(product);
+    response.json(product);
+  }  
+  catch (e) {
+    response.status(500).send(e);
+  }
+});
+// --------------------------------CLIENT BOX END---------------------
+// ------------------------------FILTER----------------------------
 // create data for filter bar
 app.get('/filterNotebook/', async (request, response) => {
     const filterNotebook = await  NotebookFilterModel.find({});

@@ -16,6 +16,7 @@ const ProductInBasketForRegisterClient =  mongoose.Schema({
     city: {type: String},
     street: {type: String},
     psc: {type: String},
+    point:{type:Boolean},
 
   });  
   const Order = mongoose.Schema({
@@ -25,6 +26,16 @@ const ProductInBasketForRegisterClient =  mongoose.Schema({
     payMethod:{type:String},
     productInBasket: [{type: ProductInBasketForRegisterClient}],
   })
+  const Profile = mongoose.Schema({
+    name:{type: String},
+    email: {type: String},
+    sex: {type: String},
+    birthday:{type:String},
+    phone:{type:String},
+  })
+  // const Currency = mongoose.Schema({
+  //   currency:{type: String},
+  // })
 // model MainCategory
 const clientBoxSchema = new mongoose.Schema({
    
@@ -32,9 +43,12 @@ const clientBoxSchema = new mongoose.Schema({
     email: {type: String,required: true,},
     userIdFirebase: {type: String, unique : true, required : true, dropDups: true},
     delivery: [{type: DeliveryClient}],
-    payMethod:{type:String},
+    payMethod:{type: String},
     order: [{type: Order}],
     productInBasket: [{type: ProductInBasketForRegisterClient}],
+    profile: [{type: Profile}],
+    currency:{type: String},
+    language:{type: String},
     
    })
 
