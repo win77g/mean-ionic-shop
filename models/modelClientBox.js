@@ -33,9 +33,20 @@ const ProductInBasketForRegisterClient =  mongoose.Schema({
     birthday:{type:String},
     phone:{type:String},
   })
-  // const Currency = mongoose.Schema({
-  //   currency:{type: String},
-  // })
+  const Favorit = mongoose.Schema({
+    id:{type: String},
+    name: {type: String},
+    subCategoryName: {type: String},
+    price:{type:String},
+    images:{type:String},
+  })
+  const History = mongoose.Schema({
+    id:{type: String},
+    name: {type: String},
+    subCategoryName: {type: String},
+    price:{type:String},
+    images:{type:String},
+  })
 // model MainCategory
 const clientBoxSchema = new mongoose.Schema({
    
@@ -49,7 +60,8 @@ const clientBoxSchema = new mongoose.Schema({
     profile: [{type: Profile}],
     currency:{type: String},
     language:{type: String},
-    
+    favorites:[{type: Favorit}],
+    history:[{type: History}],
    })
 
 // Creating model objects

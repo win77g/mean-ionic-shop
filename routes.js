@@ -675,11 +675,11 @@ app.get('/getClientBox_where/:id', async (request, response) => {
 // update  product clientBox
 app.put("/updateProductInBasketInClientBox/:id",async (request, response) => {
   const { id } = request.params;
- 
+  console.log(request.body)
   
   try {
     const product = await clientBoxModel.findByIdAndUpdate({_id : id},{ 
-
+      
       productInBasket: request.body
     },{new: true});
     //response.send(product);
@@ -779,6 +779,55 @@ app.put("/updateOrderInClientBox/:id",async (request, response) => {
   try {
     const product = await clientBoxModel.updateOne({_id:id},{ 
       $push:{order:{$each:[request.body]}}
+      
+    },{new: true});
+    response.json(product);
+  }  
+  catch (e) {
+    response.status(500).send(e);
+  }
+});
+// update favarit product
+app.put("/updateFavoritProduct/:id",async (request, response) => {
+  const { id } = request.params;
+  console.log(request.body)
+  
+  try {
+    const product = await clientBoxModel.updateOne({_id:id},{ 
+      $push:{favorites:{$each:[request.body]}}
+      
+    },{new: true});
+    response.json(product);
+  }  
+  catch (e) {
+    response.status(500).send(e);
+  }
+});
+// delete favorit product
+app.put("/deleteOneProductInFavorits/:id", async (request, response) => {
+  console.log(request.params,request.body)
+  const { id } = request.params;
+  try {
+    const fav = await clientBoxModel.updateOne(
+      
+      {'_id':id},
+      {$pull:{favorites:{_id:request.body}}},
+      {new: true});// return order
+
+    if (!fav) response.status(404).send("No item found");
+    response.status(200).send();
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+// update history product
+app.put("/updateHistoryInClientBox/:id",async (request, response) => {
+  const { id } = request.params;
+  console.log(request.body)
+  
+  try {
+    const product = await clientBoxModel.updateOne({_id:id},{ 
+      $push:{history:{$each:[request.body]}}
       
     },{new: true});
     response.json(product);
